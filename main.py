@@ -25,7 +25,7 @@ def read_fixed_cells(sheet, cells):
     values = []
     for cell in cells:
         val = parse_meter_string(sheet[cell].value)
-        values.append(float(val) if is_number(val) else None)
+        values.append(float(val) if is_number(val) else val)
     return values
 
 def read_keyword_cells(sheet, config, search_range):
@@ -154,13 +154,13 @@ def write_data_to_template(template_path, output_path, data_df, value_columns, w
 # ====== 示例调用入口 ======
 
 if __name__ == "__main__":
-    folder = "F:\\样方统计"
-    output_path = "F:\\result.xlsx"
-    template_path = "F:\\新(模板）2025年6月巴里坤调查点统计.xlsx"
-    fixed_cells = ["D2", "F2"]
+    folder = "C:\\Users\\hanji\\Desktop\\tmp\\样方统计"
+    output_path = "C:\\Users\\hanji\\Desktop\\tmp\\result.xlsx"
+    template_path = "C:\\Users\\hanji\\Desktop\\tmp\\2025年6月巴里坤调查点统计.xlsx"
+    fixed_cells = ["B3", "D2", "F2"]
     keyword_config = {
         "株数": {
-            "aliases": ["株数", "株树", "丛数"],
+            "aliases": ["株数", "株树", "丛数", "从数"],
             "offset": (11, 0)
         },
         "面积占比": {
@@ -189,7 +189,7 @@ if __name__ == "__main__":
         }
     }
     keyword_search_range = ("C4", "C100")  # 查找区域
-    write_columns = ["AG", "AH", "AI", "AJ", "AK", "AL", "AM", "AN", "AP"]
+    write_columns = ["AB", "AC", "AD", "AE", "AF", "AG", "AH", "AI", "AJ", "AL"]
     value_columns = fixed_cells + list(keyword_config.keys())
     df = process_excel_folder(folder, fixed_cells, keyword_config, keyword_search_range)
     expanded_template = preprocess_template_expand_sub_ids(template_path, df)
